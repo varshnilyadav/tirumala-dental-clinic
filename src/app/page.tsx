@@ -35,19 +35,30 @@ const services = [
     ),
   },
   {
-    title: "Smile Designing",
+    title: "Zirconia Crowns",
     description:
-      "Transform your smile with cosmetic treatments including veneers, bonding, and teeth whitening for a radiant look.",
+      "Ultra-durable, premium metal-free zirconia crowns designed to look and function exactly like natural teeth.",
     icon: (
       <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c.414 0 .75-.336.75-.75s-.336-.75-.75-.75-.75.336-.75.75.336.75.75.75Zm4.5 0c.414 0 .75-.336.75-.75s-.336-.75-.75-.75-.75.336-.75.75.336.75.75.75Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747C20.83 13.064 20.217 12 18.732 12h-1.342c-.544 0-1.028-.362-1.185-.884L15.3 8.183c-.156-.522-.64-.884-1.185-.884h-2.23c-.544 0-1.028.362-1.185.884L9.796 11.116c-.156.522-.64.884-1.185.884H7.268c-1.486 0-2.098 1.064-1.984 2.253A9.004 9.004 0 0 0 12 21Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v3m0 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
       </svg>
     ),
   },
   {
-    title: "Orthodontics",
+    title: "Teeth Whitening",
     description:
-      "Straighten your teeth with braces, aligners, and orthodontic appliances for a perfectly aligned smile.",
+      "Professional cosmetic bleaching to safely remove stains and brighten your smile in a single visit.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M3 12h2.25m-.386-6.364 1.591 1.591M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Braces & Aligners",
+    description:
+      "Modern orthodontic options including metal braces, ceramic braces, and clear aligners for all ages.",
     icon: (
       <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
@@ -55,42 +66,32 @@ const services = [
     ),
   },
   {
+    title: "Wisdom Tooth Removal",
+    description:
+      "Safe, comfortable surgical extractions of impacted wisdom teeth to prevent pain and crowding.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75 12 12m0 0 2.25 2.25M12 12l2.25-2.25M12 12l-2.25 2.25M12 5.25a.75.75 0 0 0-1.5 0v1.077c-1.282.043-2.502.262-3.61.63L6 6a.75.75 0 0 0-1.5 0v1.543c-.876.54-1.63 1.251-2.203 2.1a.75.75 0 0 0 .148.973l1.109.907c-.033.239-.054.48-.054.727v1.5c0 .247.021.488.054.727l-1.109.907a.75.75 0 0 0-.148.973c.574.849 1.327 1.56 2.203 2.1V21a.75.75 0 0 0 1.5 0l.89-1.05c1.108.368 2.328.587 3.61.63V21.75a.75.75 0 0 0 1.5 0v-1.077c1.282-.043 2.502-.262 3.61-.63l.89 1.05a.75.75 0 0 0 1.5 0v-1.543c.876-.54 1.63-1.251 2.203-2.1a.75.75 0 0 0-.148-.973l-1.109-.907c.033-.239.054-.48.054-.727v-1.5c0-.247-.021-.488-.054-.727l1.109-.907a.75.75 0 0 0 .148-.973c-.574-.849-1.327-1.56-2.203-2.1V5.25a.75.75 0 0 0-1.5 0l-.89 1.05c-1.108-.368-2.328-.587-3.61-.63V5.25Z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Complete Dentures",
+    description:
+      "Custom-crafted complete and partial dentures designed for optimal fit, comfort, and natural appearance.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 16.318A4.486 4.486 0 0 0 12.016 15a4.486 4.486 0 0 0-3.198 1.302m0 0L9 19.5m3.016-4.5V21m3.166-4.682L15 19.5m-6.5-12 1.5 1.5m5-1.5-1.5 1.5M4 12h16M3.75 9H20.25" />
+      </svg>
+    ),
+  },
+  {
     title: "Cosmetic Dentistry",
     description:
-      "Enhance your appearance with teeth whitening, porcelain veneers, and complete smile makeovers.",
+      "Transform your overall smile aesthetic with modern dental veneers, composite bonding, and smile makeovers.",
     icon: (
       <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
-      </svg>
-    ),
-  },
-  {
-    title: "Pediatric Dentistry",
-    description:
-      "Gentle, child-friendly dental care in a comfortable environment to build healthy habits from an early age.",
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.479m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Emergency Dental Care",
-    description:
-      "24/7 emergency dental services for urgent situations including trauma, severe pain, and dental accidents.",
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Hair Transplant",
-    description:
-      "Advanced FUE/FUT hair transplant procedures by our specialist surgeon for natural-looking hair restoration.",
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
       </svg>
     ),
   },

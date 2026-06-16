@@ -1,911 +1,224 @@
 "use client";
 
-import React, { useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
+import FAQAccordion from "@/components/FAQAccordion";
 
-export default function Page() {
-  const [success, setSuccess] = useState(false);
+const services = [
+  {
+    title: "Preventive Dentistry",
+    description: "Regular checkups, cleanings, and oral health assessments to catch problems early and keep your smile healthy.",
+    image: "/assets/img/gen_service-thumbnail-image.jpg",
+    tags: ["Checkups", "Cleanings", "Oral Health", "Whitening"],
+    icon: (
+      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Cosmetic Dentistry",
+    description: "Transform your smile with teeth whitening, veneers, bonding, and complete smile makeovers.",
+    image: "/assets/img/gen_service-thumbnail-image-2.jpg",
+    tags: ["Teeth Whitening", "Veneers", "Smile Makeover", "Bonding"],
+    icon: (
+      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+      </svg>
+    ),
+  },
+  {
+    title: "Restorative Treatments",
+    description: "Fillings, crowns, bridges, and implants to restore the function and beauty of your natural smile.",
+    image: "/assets/img/gen_service-thumbnail-image-3.jpg",
+    tags: ["Fillings", "Crowns & Bridges", "Dental Implants", "Dentures"],
+    icon: (
+      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Orthodontics",
+    description: "Straighten your teeth with braces, clear aligners, and orthodontic appliances for a perfect alignment.",
+    image: "/assets/img/gen_service-thumbnail-image-4.jpg",
+    tags: ["Braces", "Clear Aligners", "Retainers", "Jaw Alignment"],
+    icon: (
+      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+      </svg>
+    ),
+  },
+  {
+    title: "Root Canal Treatment",
+    description: "Pain-free endodontic procedures using advanced techniques to save your natural teeth effectively.",
+    image: "/assets/img/gen_home-value-image.jpg",
+    tags: ["Root Canal", "Re-treatment", "Apicoectomy", "Pain Relief"],
+    icon: (
+      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Emergency & Trauma Care",
+    description: "24/7 emergency dental services for urgent situations including trauma, severe pain, and accidents.",
+    image: "/assets/img/gen_our-story-image-5.jpg",
+    tags: ["Trauma Surgery", "Emergency Care", "Pain Management", "24/7"],
+    icon: (
+      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+      </svg>
+    ),
+  },
+];
 
-  const handleCallbackSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSuccess(true);
-  };
+const faqItems = [
+  { question: "How often should I visit the dentist?", answer: "We recommend visiting every 6 months for routine checkups and cleanings to maintain optimal oral health and catch any issues early." },
+  { question: "Are dental implants safe?", answer: "Yes, dental implants are one of the safest and most predictable dental procedures with a success rate of over 95%. Dr. Sai Kumar uses advanced techniques for minimal discomfort." },
+  { question: "How long does a root canal take?", answer: "Most root canal treatments are completed in 1-2 visits, each lasting 60-90 minutes. With modern techniques, the procedure is virtually painless." },
+  { question: "Do you accept insurance?", answer: "We work with most major dental insurance providers. Please call our clinic to verify your specific coverage and benefits." },
+];
 
+export default function ServicePage() {
   return (
     <>
-      {success ? (
-        <div className="lead-form_success" style={{ display: "block" }}>
-          <div className="lead-form_title">Thanks! You're all set.</div>
-          <div className="lead-form_sub">Our team will call you within 10 minutes.</div>
+      {/* Hero */}
+      <section className="bg-brand-surface py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="section-tag mx-auto mb-6">Our Services</div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Comprehensive Dental Care,{" "}
+              <span className="text-brand-teal">Tailored to You</span>
+            </h1>
+            <p className="text-brand-gray max-w-2xl mx-auto text-lg">
+              From routine checkups to advanced treatments, we provide
+              personalized dental services designed to keep your smile healthy
+              and confident.
+            </p>
+          </motion.div>
         </div>
-      ) : (
-<div className="page-wrapper">
-            <div data-collapse="medium" data-animation="default" data-duration="400" fs-scrolldisable-element="smart-nav" data-easing="ease" data-easing2="ease" role="banner" className="navbar_wrap w-nav">
-                <div className="navbar_container">
-                    <a href="/" className="navbar_logo w-nav-brand">
-                        <img loading="eager" src="assets/img/tirumala-logo-dark.svg" alt="Tirumala logo" className="logo_image"/>
-                    </a>
-                    <div className="navbar-content_wrap">
-                        <nav role="navigation" className="navbar_menu w-nav-menu">
-                            <a href="/" className="navbar_link w-inline-block">
-                                <div>Home</div>
-                            </a>
-                            <a href="/about" className="navbar_link w-inline-block">
-                                <div>About Us</div>
-                            </a>
-                            <a href="/service" aria-current="page" className="navbar_link w-inline-block w--current">
-                                <div>Services</div>
-                            </a>
-                            <a href="/blog" className="navbar_link w-inline-block">
-                                <div>Blog</div>
-                            </a>
-                            <div data-delay="200" data-hover="false" className="navbar_dropdown w-dropdown">
-                                <div className="navbar-dropdown_toggle w-dropdown-toggle">
-                                    <div>Pages</div>
-                                    <div className="dropdown_chevron">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20 20" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                            <path d="M9.99991 10.9763L14.1247 6.85156L15.3032 8.03007L9.99991 13.3334L4.69666 8.03007L5.87516 6.85156L9.99991 10.9763Z" fill="currentColor"></path>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <nav className="navbar-dropdown_list w-dropdown-list">
-                                    <div className="navbar-dropdown_wrapper">
-                                        <div className="navbar-dropdown_column">
-                                            <a href="/" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Home</div>
-                                            </a>
-                                            <a href="/about" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>About </div>
-                                            </a>
-                                            <a href="/service" data-animation="text-flip" aria-current="page" className="navbar-dropdown_link w-inline-block w--current">
-                                                <div>Services</div>
-                                            </a>
-                                            <a href="/service" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Services Details</div>
-                                            </a>
-                                            <a href="/about" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Doctor Details</div>
-                                            </a>
-                                            <a href="https://wa.me/919307512816" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Contact Us</div>
-                                            </a>
-                                        </div>
-                                        <div className="navbar-dropdown_column">
-                                            <a href="/blog" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Blogs</div>
-                                            </a>
-                                            <a href="/blog" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Blog Details</div>
-                                            </a>
-                                            <a href="/privacy" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Privacy Policy</div>
-                                            </a>
-                                            <a href="/cookies" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Cookies</div>
-                                            </a>
-                                            <a href="404.html" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>404</div>
-                                            </a>
-                                        </div>
-                                        <div className="navbar-dropdown_column">
-                                            <a href="/terms" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Terms &Conditions</div>
-                                            </a>
-                                            <a href="/" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Styleguide</div>
-                                            </a>
-                                            <a href="/" data-animation="text-flip" className="navbar-dropdown_link w-inline-block">
-                                                <div>Instruction</div>
-                                            </a>
-                                            
-                                        </div>
-                                    </div>
-                                    <div className="navbar-dropdown_bottom">
-                                        <p className="dropdown-info_text">
-                                            © 2026 Tirumala Dental Clinic
-                                        </p>
-                                        <div className="navbar-dropdown_social">
-                                            <a aria-label="social-icon" href="https://www.facebook.com" target="_blank" className="dropdown-social_icon-item w-inline-block">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 24" fill="none" className="social_icon is-facebook">
-                                                    <path d="M12.2558 5.33333H8.92242C8.30875 5.33333 7.81131 5.8308 7.81131 6.44444V9.77778H12.2558C12.3821 9.77498 12.502 9.83378 12.5771 9.93544C12.6522 10.0371 12.6733 10.1689 12.6335 10.2889L11.8113 12.7333C11.7355 12.9577 11.5259 13.1093 11.2891 13.1111H7.81131V21.4444C7.81131 21.7512 7.56253 22 7.25575 22H4.47798C4.17116 22 3.92242 21.7512 3.92242 21.4444V13.1111H2.25575C1.94893 13.1111 1.7002 12.8623 1.7002 12.5556V10.3333C1.7002 10.0266 1.94893 9.77778 2.25575 9.77778H3.92242V6.44444C3.92242 3.98984 5.9123 2 8.36687 2H12.2558C12.5625 2 12.8113 2.24873 12.8113 2.55556V4.77778C12.8113 5.0846 12.5625 5.33333 12.2558 5.33333Z" fill="currentColor"></path>
-                                                </svg>
-                                            </a>
-                                            <a aria-label="social-icon" href="https://www.instagram.com" target="_blank" className="dropdown-social_icon-item w-inline-block">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 26 24" fill="none">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8194 2H8.93056C5.86231 2 3.375 4.48731 3.375 7.55556V16.4444C3.375 19.5127 5.86231 22 8.93056 22H17.8194C20.8876 22 23.375 19.5127 23.375 16.4444V7.55556C23.375 4.48731 20.8876 2 17.8194 2ZM21.4305 16.4444C21.4244 18.4362 19.8112 20.0494 17.8194 20.0556H8.93056C6.93873 20.0494 5.32555 18.4362 5.31945 16.4444V7.55556C5.32555 5.56372 6.93873 3.95054 8.93056 3.94444H17.8194C19.8112 3.95054 21.4244 5.56372 21.4305 7.55556V16.4444ZM18.6527 7.83333C19.2664 7.83333 19.7638 7.33587 19.7638 6.72222C19.7638 6.10858 19.2664 5.61111 18.6527 5.61111C18.0391 5.61111 17.5416 6.10858 17.5416 6.72222C17.5416 7.33587 18.0391 7.83333 18.6527 7.83333ZM13.375 7C10.6136 7 8.375 9.23858 8.375 12C8.375 14.7614 10.6136 17 13.375 17C16.1364 17 18.375 14.7614 18.375 12C18.378 10.673 17.8521 9.39952 16.9137 8.4612C15.9754 7.52288 14.702 6.99704 13.375 7ZM10.3194 12C10.3194 13.6876 11.6874 15.0556 13.375 15.0556C15.0625 15.0556 16.4305 13.6876 16.4305 12C16.4305 10.3124 15.0625 8.94444 13.375 8.94444C11.6874 8.94444 10.3194 10.3124 10.3194 12Z" fill="currentColor"></path>
-                                                </svg>
-                                            </a>
-                                            <a aria-label="social-icon" href="https://www.twitter.com" target="_blank" className="dropdown-social_icon-item w-inline-block">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 31 24" fill="none">
-                                                    <path d="M26.3412 4.89857C25.7342 5.7084 25.0003 6.41482 24.168 6.99055C24.168 7.20209 24.168 7.41363 24.168 7.63694C24.1747 11.4786 22.6402 15.1622 19.9085 17.8621C17.1767 20.562 13.4764 22.0522 9.63693 21.9986C7.41724 22.0061 5.22597 21.4993 3.23479 20.5178C3.12742 20.4709 3.05817 20.3647 3.05858 20.2475V20.1182C3.05858 19.9494 3.19533 19.8127 3.36401 19.8127C5.54591 19.7407 7.64996 18.9842 9.37849 17.6502C7.40357 17.6104 5.62665 16.4404 4.80889 14.6415C4.76759 14.5433 4.78044 14.4305 4.84283 14.3441C4.90521 14.2577 5.0081 14.2101 5.11431 14.2185C5.71453 14.2787 6.32076 14.2229 6.89987 14.0539C4.71972 13.6013 3.08157 11.7914 2.84713 9.5761C2.8388 9.46982 2.88642 9.36694 2.9728 9.30446C3.05917 9.24211 3.17181 9.22917 3.27003 9.2706C3.85508 9.52877 4.48665 9.66472 5.12606 9.67008C3.21573 8.4163 2.39059 6.03145 3.11731 3.86435C3.19233 3.65377 3.37256 3.4982 3.59176 3.45483C3.81095 3.41144 4.03681 3.48665 4.1863 3.6528C6.76417 6.39642 10.3062 8.03133 14.0655 8.21281C13.9693 7.82858 13.922 7.43369 13.9246 7.03755C13.9598 4.96043 15.245 3.11008 17.1786 2.35277C19.112 1.59548 21.3113 2.08109 22.7467 3.58228C23.725 3.39589 24.6709 3.06726 25.5542 2.60681C25.6189 2.56642 25.7009 2.56642 25.7657 2.60681C25.806 2.67155 25.806 2.75362 25.7657 2.81836C25.3378 3.79807 24.6151 4.61977 23.6982 5.16888C24.5011 5.07577 25.2898 4.88637 26.0476 4.60477C26.1114 4.56134 26.1952 4.56134 26.259 4.60477C26.3125 4.62921 26.3525 4.67597 26.3683 4.73258C26.3841 4.7892 26.3742 4.84992 26.3412 4.89857Z" fill="currentColor"></path>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </nav>
-                            </div>
-                        </nav>
-                        <div className="navbar-button_wrapper">
-                            <div className="navbar_button hide-mobile">
-                                <div className="button-container">
-                                    <a data-wf--button-primary--variant="light-small" href="https://wa.me/919307512816" className="button_primary w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 w-inline-block">
-                                        <div className="button_inner">
-                                            <div className="button-text_wrap">
-                                                <div className="button_text">Get Appointment</div>
-                                            </div>
-                                            <div className="button-icon_group w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                        <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                    </svg>
-                                                </div>
-                                                <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 is-hover">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                        <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="navbar-toggler-button w-nav-button">
-                                <div className="navbar-toggle_icon">
-                                    <div className="navbar-toggler_bar_top"></div>
-                                    <div className="navbar-toggler_bar-middle">
-                                        <div className="navbar-toggler_bar-middle_inner"></div>
-                                    </div>
-                                    <div className="navbar_toggler-bar-bottom"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      </section>
+
+      {/* Services Detailed */}
+      <section className="section-padding">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 space-y-16">
+          {services.map((service, index) => (
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-center ${
+                index % 2 === 1 ? "lg:direction-rtl" : ""
+              }`}
+            >
+              <div className={index % 2 === 1 ? "lg:order-2" : ""}>
+                <div className="rounded-2xl overflow-hidden shadow-card">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-64 md:h-80 object-cover"
+                  />
                 </div>
+              </div>
+
+              <div className={`flex flex-col gap-5 ${index % 2 === 1 ? "lg:order-1" : ""}`}>
+                <div className="w-14 h-14 rounded-2xl bg-brand-teal/10 text-brand-teal flex items-center justify-center">
+                  {service.icon}
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold">
+                  {service.title}
+                </h2>
+                <p className="text-brand-gray leading-relaxed">
+                  {service.description}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {service.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs font-medium px-3 py-1.5 rounded-full bg-brand-teal/10 text-brand-teal"
+                    >
+                      ✓ {tag}
+                    </span>
+                  ))}
+                </div>
+                <Link
+                  href="https://wa.me/919307512816"
+                  target="_blank"
+                  className="inline-flex items-center gap-2 text-brand-teal font-semibold text-sm hover:gap-3 transition-all duration-300 w-fit mt-2"
+                >
+                  Book this service
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                  </svg>
+                </Link>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section-padding bg-brand-surface">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <div className="section-tag mx-auto mb-4">FAQ</div>
+            <h2 className="text-3xl md:text-4xl font-bold">
+              Common <span className="text-brand-teal">Questions</span>
+            </h2>
+          </motion.div>
+          <FAQAccordion items={faqItems} />
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-brand-dark">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 py-16 md:py-20 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col items-center gap-6"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Need a Specific Treatment?
+            </h2>
+            <p className="text-white/60 max-w-lg">
+              Contact us to discuss your dental needs and get personalized
+              treatment recommendations from our specialists.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link
+                href="https://wa.me/919307512816"
+                target="_blank"
+                className="inline-flex items-center gap-2 bg-brand-teal hover:bg-brand-teal-hover text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-300 shadow-lg"
+              >
+                Book via WhatsApp
+              </Link>
+              <a
+                href="tel:+919307512816"
+                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-3.5 rounded-full border border-white/20 transition-all duration-300"
+              >
+                Call +91 93075 12816
+              </a>
             </div>
-            <main className="main-wrapper">
-                <header className="section_hero">
-                    <div className="section-padding padding-hero">
-                        <div className="container">
-                            <div className="section_component">
-                                <div className="service-hero_content">
-                                    <div className="content-align-center">
-                                        <div className="margin-bottom margin-16px">
-                                            <h1 hero-text-split="" className="heading">Comprehensive Dental Care, Tailored to You</h1>
-                                        </div>
-                                        <div className="margin-bottom margin-32px">
-                                            <p data-w-id="59b2fde7-5646-6fb1-97dc-254647c27746" style={{ "transform": "translate3d(0, 25%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)", "opacity": "0" }} className="service-hero_para">From routine checkups to advanced treatments, we provide personalized dental services designed to keep your smile healthy and confident.</p>
-                                        </div>
-                                        <div data-w-id="5f774497-131f-4226-a960-b1cc3476ff65" style={{ "transform": "translate3d(0, 25%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)", "opacity": "0" }} className="button-container">
-                                            <a data-wf--button-primary--variant="base" href="https://wa.me/919307512816" className="button_primary w-inline-block">
-                                                <div className="button_inner">
-                                                    <div className="button-text_wrap">
-                                                        <div className="button_text">Book An Appointment</div>
-                                                    </div>
-                                                    <div className="button-icon_group">
-                                                        <div className="button-icon_wrap">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                            </svg>
-                                                        </div>
-                                                        <div className="button-icon_wrap is-hover">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="hero_gradient"></div>
-                </header>
-                <section className="section_service is-service-showcase">
-                    <div className="section-padding padding-120x120">
-                        <div className="container">
-                            <div className="section_component">
-                                <div className="margin-bottom margin-56px">
-                                    <div className="service_header">
-                                        <div data-w-id="0be34710-9775-5691-7e32-6d70f451785f" style={{ "transform": "translate3d(0, 25%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)", "opacity": "0" }} className="section-tag_wrap">
-                                            <div className="section_tag">
-                                                <div className="icon_wrap is-small">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                        <path d="M12 5.45455H7.31455L10.6255 2.14364L9.85636 1.37455L6.54545 4.68545V0H5.45455V4.68545L2.14364 1.37455L1.37455 2.14364L4.68545 5.45455H0V6.54545H4.68545L1.37455 9.85636L2.14364 10.6255L5.45455 7.31455V12H6.54545V7.31455L9.85636 10.6255L10.6255 9.85636L7.31455 6.54545H12V5.45455Z" fill="currentColor"></path>
-                                                    </svg>
-                                                </div>
-                                                <div>Our Services</div>
-                                            </div>
-                                        </div>
-                                        <h2 data-w-id="9b9287fd-d4b0-4619-784f-67450855a157" style={{ "transform": "translate3d(0, 25%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)", "opacity": "0" }}>
-                                            What <span className="text-highlighted">We Provide</span>
-                                            For Every Generation
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div className="w-dyn-list">
-                                    <div role="list" className="collection-list w-dyn-items">
-                                        <div role="listitem" className="w-dyn-item">
-                                            <div className="service-item_wrap">
-                                                <div className="service-item_trigger">
-                                                    <div className="service-trigger_content-wrap">
-                                                        <h3 className="service-trigger_title">Preventive dentistry</h3>
-                                                        <div className="service-trigger_para-wrap">
-                                                            <p className="service-trigger_para">At Tirumala, we combine expertise, compassion, and modern technology</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="service-trigger_icon-wrap">
-                                                        <div className="service-trigger_icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 18" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                <path d="M5.53047 17.0606L5.53024 1.50232M10.5303 6.06051L5.53023 1.06055L0.530273 6.06055" stroke="currentColor" stroke-width="1.5"></path>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="service-item_body">
-                                                    <div className="service-item_body-inner">
-                                                        <div id="w-node-a92f16b9-75d8-78c4-a39a-766877b28187-965ec33e" className="service-item_small-text">What includes</div>
-                                                        <div className="service-item_details">
-                                                            <div className="service-thumbnail_wrap">
-                                                                <img src="assets/img/gen_service-thumbnail-image.jpg" loading="lazy" alt="" sizes="100vw" srcSet="assets/img/gen_service-thumbnail-image.jpg 500w, assets/img/gen_service-thumbnail-image.jpg 800w, assets/img/gen_service-thumbnail-image.jpg 1080w, assets/img/gen_service-thumbnail-image.jpg 1184w" className="service_thumbnail"/>
-                                                            </div>
-                                                            <div className="service-tag_wrap">
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Checkups</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Cleanings</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Oral Health</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Whitening</div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="button-container">
-                                                                <a data-wf--button-primary--variant="light-small" href="/service" className="button_primary w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 w-inline-block">
-                                                                    <div className="button_inner">
-                                                                        <div className="button-text_wrap">
-                                                                            <div className="button_text">View Details</div>
-                                                                        </div>
-                                                                        <div className="button-icon_group w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                                            <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                                </svg>
-                                                                            </div>
-                                                                            <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 is-hover">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                                </svg>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div role="listitem" className="w-dyn-item">
-                                            <div className="service-item_wrap">
-                                                <div className="service-item_trigger">
-                                                    <div className="service-trigger_content-wrap">
-                                                        <h3 className="service-trigger_title">Cosmetic dentistry</h3>
-                                                        <div className="service-trigger_para-wrap">
-                                                            <p className="service-trigger_para">From whitening to veneers, we help you achieve the bright, confident smile you’ve always wanted.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="service-trigger_icon-wrap">
-                                                        <div className="service-trigger_icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 18" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                <path d="M5.53047 17.0606L5.53024 1.50232M10.5303 6.06051L5.53023 1.06055L0.530273 6.06055" stroke="currentColor" stroke-width="1.5"></path>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="service-item_body">
-                                                    <div className="service-item_body-inner">
-                                                        <div id="w-node-a92f16b9-75d8-78c4-a39a-766877b28187-965ec33e" className="service-item_small-text">What includes</div>
-                                                        <div className="service-item_details">
-                                                            <div className="service-thumbnail_wrap">
-                                                                <img src="assets/img/gen_service-thumbnail-image-2.jpg" loading="lazy" alt="" sizes="100vw" srcSet="assets/img/gen_service-thumbnail-image-2.jpg 500w, assets/img/gen_service-thumbnail-image-2.jpg 800w, assets/img/gen_service-thumbnail-image-2.jpg 1080w, assets/img/gen_service-thumbnail-image-2.jpg 1336w" className="service_thumbnail"/>
-                                                            </div>
-                                                            <div className="service-tag_wrap">
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Teeth Whitening</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Dental Veneers</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Smile Makeover</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Cosmetic Bonding</div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="button-container">
-                                                                <a data-wf--button-primary--variant="light-small" href="/service" className="button_primary w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 w-inline-block">
-                                                                    <div className="button_inner">
-                                                                        <div className="button-text_wrap">
-                                                                            <div className="button_text">View Details</div>
-                                                                        </div>
-                                                                        <div className="button-icon_group w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                                            <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                                </svg>
-                                                                            </div>
-                                                                            <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 is-hover">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                                </svg>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div role="listitem" className="w-dyn-item">
-                                            <div className="service-item_wrap">
-                                                <div className="service-item_trigger">
-                                                    <div className="service-trigger_content-wrap">
-                                                        <h3 className="service-trigger_title">Restorative treatments</h3>
-                                                        <div className="service-trigger_para-wrap">
-                                                            <p className="service-trigger_para">Fillings, crowns, implants, and more to restore the function and beauty of your smile.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="service-trigger_icon-wrap">
-                                                        <div className="service-trigger_icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 18" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                <path d="M5.53047 17.0606L5.53024 1.50232M10.5303 6.06051L5.53023 1.06055L0.530273 6.06055" stroke="currentColor" stroke-width="1.5"></path>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="service-item_body">
-                                                    <div className="service-item_body-inner">
-                                                        <div id="w-node-a92f16b9-75d8-78c4-a39a-766877b28187-965ec33e" className="service-item_small-text">What includes</div>
-                                                        <div className="service-item_details">
-                                                            <div className="service-thumbnail_wrap">
-                                                                <img src="assets/img/gen_service-thumbnail-image-3.jpg" loading="lazy" alt="" sizes="100vw" srcSet="assets/img/gen_service-thumbnail-image-3.jpg 500w, assets/img/gen_service-thumbnail-image-3.jpg 800w, assets/img/gen_service-thumbnail-image-3.jpg 1080w, assets/img/gen_service-thumbnail-image-3.jpg 1336w" className="service_thumbnail"/>
-                                                            </div>
-                                                            <div className="service-tag_wrap">
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Dental Fillings</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Crowns &Bridges</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Tooth Repair</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Dental Implants</div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="button-container">
-                                                                <a data-wf--button-primary--variant="light-small" href="/service" className="button_primary w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 w-inline-block">
-                                                                    <div className="button_inner">
-                                                                        <div className="button-text_wrap">
-                                                                            <div className="button_text">View Details</div>
-                                                                        </div>
-                                                                        <div className="button-icon_group w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                                            <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                                </svg>
-                                                                            </div>
-                                                                            <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 is-hover">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                                </svg>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div role="listitem" className="w-dyn-item">
-                                            <div className="service-item_wrap">
-                                                <div className="service-item_trigger">
-                                                    <div className="service-trigger_content-wrap">
-                                                        <h3 className="service-trigger_title">Orthodontics</h3>
-                                                        <div className="service-trigger_para-wrap">
-                                                            <p className="service-trigger_para">Straighten your teeth and improve your bite with modern braces or clear aligners designed.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="service-trigger_icon-wrap">
-                                                        <div className="service-trigger_icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 18" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                <path d="M5.53047 17.0606L5.53024 1.50232M10.5303 6.06051L5.53023 1.06055L0.530273 6.06055" stroke="currentColor" stroke-width="1.5"></path>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="service-item_body">
-                                                    <div className="service-item_body-inner">
-                                                        <div id="w-node-a92f16b9-75d8-78c4-a39a-766877b28187-965ec33e" className="service-item_small-text">What includes</div>
-                                                        <div className="service-item_details">
-                                                            <div className="service-thumbnail_wrap">
-                                                                <img src="assets/img/gen_service-thumbnail-image-4.jpg" loading="lazy" alt="" sizes="100vw" srcSet="assets/img/gen_service-thumbnail-image-4.jpg 500w, assets/img/gen_service-thumbnail-image-4.jpg 800w, assets/img/gen_service-thumbnail-image-4.jpg 1080w, assets/img/gen_service-thumbnail-image-4.jpg 1336w" className="service_thumbnail"/>
-                                                            </div>
-                                                            <div className="service-tag_wrap">
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Braces</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Clear Aligners</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Teeth Alignment</div>
-                                                                </div>
-                                                                <div className="service_tag">
-                                                                    <div className="service-tag_icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM17.4571 9.45711L11 15.9142L6.79289 11.7071L8.20711 10.2929L11 13.0858L16.0429 8.04289L17.4571 9.45711Z" fill="white"></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div>Bite Correction</div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="button-container">
-                                                                <a data-wf--button-primary--variant="light-small" href="/service" className="button_primary w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 w-inline-block">
-                                                                    <div className="button_inner">
-                                                                        <div className="button-text_wrap">
-                                                                            <div className="button_text">View Details</div>
-                                                                        </div>
-                                                                        <div className="button-icon_group w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                                            <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                                </svg>
-                                                                            </div>
-                                                                            <div className="button-icon_wrap w-variant-fb89ee7f-8db1-8e54-55c6-075f0151c951 is-hover">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                                </svg>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section className="section_faq">
-                    <div className="section-padding padding-120x140">
-                        <div className="container">
-                            <div className="section_component">
-                                <div className="faq-element">
-                                    <div id="w-node-_7aff3246-7436-183d-9639-5ab4a844114f-a844114a" className="faq_info">
-                                        <div className="faq-info_content">
-                                            <div data-w-id="7aff3246-7436-183d-9639-5ab4a8441151" className="margin-bottom margin-12px">
-                                                <div className="section_tag">
-                                                    <div className="icon_wrap is-small">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                            <path d="M12 5.45455H7.31455L10.6255 2.14364L9.85636 1.37455L6.54545 4.68545V0H5.45455V4.68545L2.14364 1.37455L1.37455 2.14364L4.68545 5.45455H0V6.54545H4.68545L1.37455 9.85636L2.14364 10.6255L5.45455 7.31455V12H6.54545V7.31455L9.85636 10.6255L10.6255 9.85636L7.31455 6.54545H12V5.45455Z" fill="currentColor"></path>
-                                                        </svg>
-                                                    </div>
-                                                    <div>FAQ</div>
-                                                </div>
-                                            </div>
-                                            <div className="margin-bottom margin-16px">
-                                                <h2 data-w-id="7aff3246-7436-183d-9639-5ab4a8441155">
-                                                    <span className="text-highlighted">Questions </span>
-                                                    We Get Often
-                                                </h2>
-                                            </div>
-                                            <p data-w-id="7aff3246-7436-183d-9639-5ab4a8441159" className="body-text-18px">Answers to Your Most Common Questions About Dental Care and Our Services</p>
-                                        </div>
-                                        <div data-w-id="7aff3246-7436-183d-9639-5ab4a844115b" className="faq_cta">
-                                            <div className="faq-cta_icon-wrap">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none" className="faq-cta_icon">
-                                                    <path d="M21 16.42V19.9561C21 20.4811 20.5941 20.9167 20.0705 20.9537C19.6331 20.9846 19.2763 21 19 21C10.1634 21 3 13.8366 3 5C3 4.72371 3.01545 4.36687 3.04635 3.9295C3.08337 3.40588 3.51894 3 4.04386 3H7.5801C7.83678 3 8.05176 3.19442 8.07753 3.4498C8.10067 3.67907 8.12218 3.86314 8.14207 4.00202C8.34435 5.41472 8.75753 6.75936 9.3487 8.00303C9.44359 8.20265 9.38171 8.44159 9.20185 8.57006L7.04355 10.1118C8.35752 13.1811 10.8189 15.6425 13.8882 16.9565L15.4271 14.8019C15.5572 14.6199 15.799 14.5573 16.001 14.6532C17.2446 15.2439 18.5891 15.6566 20.0016 15.8584C20.1396 15.8782 20.3225 15.8995 20.5502 15.9225C20.8056 15.9483 21 16.1633 21 16.42Z" fill="currentColor"></path>
-                                                </svg>
-                                            </div>
-                                            <div className="faq-cta_info">
-                                                <div className="faq-cta_info-content">
-                                                    <div className="faq-cta_info-title">Still have a question?</div>
-                                                    <p>Our team is ready to assist you with anything you need.</p>
-                                                </div>
-                                                <div className="faq-cta_info-button">
-                                                    <a data-wf--button-primary--variant="small" href="https://wa.me/919307512816" className="button_primary w-variant-1a94fba4-1615-e418-bbea-f08bbc622622 w-inline-block">
-                                                        <div className="button_inner">
-                                                            <div className="button-text_wrap">
-                                                                <div className="button_text">Make A Call</div>
-                                                            </div>
-                                                            <div className="button-icon_group">
-                                                                <div className="button-icon_wrap">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                        <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                    </svg>
-                                                                </div>
-                                                                <div className="button-icon_wrap is-hover">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                                        <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                                    </svg>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="faq_list">
-                                        <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100" className="faq_tabs w-tabs">
-                                            <div className="faq-tabs_menu w-tab-menu">
-                                                <a data-w-tab="Tab 1" className="faq_item w-inline-block w-tab-link w--current">
-                                                    <div className="faq_header">
-                                                        <div className="faq-header_title">How often should I visit the dentist?</div>
-                                                        <div className="faq-header_icon-wrap">
-                                                            <div className="faq-header_icon-line"></div>
-                                                            <div className="faq-header_icon-line is-absolute"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="faq_description">
-                                                        <div className="faq-description_inner">
-                                                            <p>We recommend a routine dental checkup every six months to maintain optimal oral health and catch any issues early.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a data-w-tab="Tab 2" className="faq_item w-inline-block w-tab-link">
-                                                    <div className="faq_header">
-                                                        <div className="faq-header_title">Do you offer emergency dental services?</div>
-                                                        <div className="faq-header_icon-wrap">
-                                                            <div className="faq-header_icon-line"></div>
-                                                            <div className="faq-header_icon-line is-absolute"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="faq_description">
-                                                        <div className="faq-description_inner">
-                                                            <p>Yes, we provide emergency dental care for urgent issues like pain, injury, or infections with prompt attention.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a data-w-tab="Tab 3" className="faq_item w-inline-block w-tab-link">
-                                                    <div className="faq_header">
-                                                        <div className="faq-header_title">Are your treatments painful?</div>
-                                                        <div className="faq-header_icon-wrap">
-                                                            <div className="faq-header_icon-line"></div>
-                                                            <div className="faq-header_icon-line is-absolute"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="faq_description">
-                                                        <div className="faq-description_inner">
-                                                            <p>Most treatments are comfortable with modern techniques and anesthesia, ensuring minimal pain and a stress-free experience.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a data-w-tab="Tab 4" className="faq_item w-inline-block w-tab-link">
-                                                    <div className="faq_header">
-                                                        <div className="faq-header_title">What dental services do you provide?</div>
-                                                        <div className="faq-header_icon-wrap">
-                                                            <div className="faq-header_icon-line"></div>
-                                                            <div className="faq-header_icon-line is-absolute"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="faq_description">
-                                                        <div className="faq-description_inner">
-                                                            <p>We offer preventive, cosmetic, restorative, and specialized dental services tailored to maintain and improve your health.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a data-w-tab="Tab 5" className="faq_item is-last w-inline-block w-tab-link">
-                                                    <div className="faq_header">
-                                                        <div className="faq-header_title">Do you accept insurance?</div>
-                                                        <div className="faq-header_icon-wrap">
-                                                            <div className="faq-header_icon-line"></div>
-                                                            <div className="faq-header_icon-line is-absolute"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="faq_description">
-                                                        <div className="faq-description_inner">
-                                                            <p>Yes, we accept most major insurance plans and assist patients in maximizing their benefits for affordable dental care.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div className="faq-tabs_content w-tab-content">
-                                                <div data-w-tab="Tab 1" className="w-tab-pane w--tab-active"></div>
-                                                <div data-w-tab="Tab 2" className="w-tab-pane"></div>
-                                                <div data-w-tab="Tab 3" className="w-tab-pane"></div>
-                                                <div data-w-tab="Tab 4" className="w-tab-pane"></div>
-                                                <div data-w-tab="Tab 5" className="w-tab-pane"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section className="section_cta">
-                    <div className="section-padding padding-100x100">
-                        <div className="container">
-                            <div className="section_component">
-                                <div className="cta_element">
-                                    <div className="cta_content">
-                                        <div data-w-id="875ac5c5-fc76-0575-598a-0f09e52c4247" className="cta_tag">
-                                            <div className="icon_wrap is-small">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                    <path d="M12 5.45455H7.31455L10.6255 2.14364L9.85636 1.37455L6.54545 4.68545V0H5.45455V4.68545L2.14364 1.37455L1.37455 2.14364L4.68545 5.45455H0V6.54545H4.68545L1.37455 9.85636L2.14364 10.6255L5.45455 7.31455V12H6.54545V7.31455L9.85636 10.6255L10.6255 9.85636L7.31455 6.54545H12V5.45455Z" fill="currentColor"></path>
-                                                </svg>
-                                            </div>
-                                            <div>Get In Touch</div>
-                                        </div>
-                                        <h2 data-w-id="875ac5c5-fc76-0575-598a-0f09e52c424d">
-                                            Let’s Talk Teeth, We’re <span className="text-highlighted">Just a Smile Away</span>
-                                        </h2>
-                                        <p data-w-id="875ac5c5-fc76-0575-598a-0f09e52c424f" className="text-color-light">Your health journey starts with one simple step, we’re here to guide you.</p>
-                                    </div>
-                                    <div data-w-id="875ac5c5-fc76-0575-598a-0f09e52c4251" className="button-container">
-                                        <a data-wf--button-primary--variant="light" href="https://wa.me/919307512816" className="button_primary w-variant-62db4792-8717-dbe8-e811-0d36eb02f9ec w-inline-block">
-                                            <div className="button_inner">
-                                                <div className="button-text_wrap">
-                                                    <div className="button_text">Get Started</div>
-                                                </div>
-                                                <div className="button-icon_group w-variant-62db4792-8717-dbe8-e811-0d36eb02f9ec">
-                                                    <div className="button-icon_wrap">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                            <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                        </svg>
-                                                    </div>
-                                                    <div className="button-icon_wrap is-hover">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                            <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="cta-overlay-wrap">
-                        <div className="cta_overlay is-bottom-right"></div>
-                        <div className="cta_overlay is-top-right"></div>
-                    </div>
-                </section>
-            </main>
-            <footer className="section_footer">
-                <div className="section-padding">
-                    <div className="container">
-                        <div data-w-id="a1b41f4f-e78b-52e6-2492-2ff9a80f251e" className="footer_header">
-                            <a id="w-node-_69a072d1-69e6-8783-2548-858b3e84bf4f-4af74ce9" href="/" className="footer_brand w-inline-block">
-                                <img src="assets/img/tirumala-logo-dark.svg" loading="lazy" alt="Tirumala logo" className="brand_logo"/>
-                            </a>
-                            <div className="footer-contact_wrap">
-                                <a href="tel:+91 9307512816" className="footer-contact_link w-inline-block">
-                                    <div>+91 9307512816</div>
-                                </a>
-                                <a href="mailto:hello@tirumaladental.com?subject=Support" className="footer-contact_link w-inline-block">
-                                    <div>hello@tirumaladental.com</div>
-                                </a>
-                            </div>
-                        </div>
-                        <div data-w-id="62445903-4aac-6534-d392-fbc69f50ef16" className="footer_element">
-                            <div className="footer_info">
-                                <div className="margin-bottom margin-24px">
-                                    <div className="footer-info_para-wrap">
-                                        <p className="footer-info_para">Advanced technology, a caring team, and treatments designed to keep your smile healthy for life. </p>
-                                    </div>
-                                </div>
-                                <a data-wf--button-primary--variant="light" href="https://wa.me/919307512816" className="button_primary w-variant-62db4792-8717-dbe8-e811-0d36eb02f9ec w-inline-block">
-                                    <div className="button_inner">
-                                        <div className="button-text_wrap">
-                                            <div className="button_text">Get Appointment</div>
-                                        </div>
-                                        <div className="button-icon_group w-variant-62db4792-8717-dbe8-e811-0d36eb02f9ec">
-                                            <div className="button-icon_wrap">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                </svg>
-                                            </div>
-                                            <div className="button-icon_wrap is-hover">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                    <path d="M4.70139 0.75L10.5303 0.750201L10.5303 6.55165M0.530334 10.75L10.2896 0.990932" stroke="currentColor" stroke-width="1.5"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div id="w-node-_90aa065e-2d95-4aa8-f2ac-04b04859c2d0-4af74ce9" className="footer_menu">
-                                <div className="footer-links-column">
-                                    <div className="footer-menu_title">Navigation</div>
-                                    <div className="footer-menu_link-wrap">
-                                        <a href="/" className="footer-menu_link w-inline-block">
-                                            <div>Home</div>
-                                        </a>
-                                        <a href="/about" className="footer-menu_link w-inline-block">
-                                            <div>About</div>
-                                        </a>
-                                        <a href="/service" aria-current="page" className="footer-menu_link w-inline-block w--current">
-                                            <div>Services</div>
-                                        </a>
-                                        <a href="/blog" className="footer-menu_link w-inline-block">
-                                            <div>Blogs</div>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div id="w-node-_8ecb3a12-ee6e-7ca0-b061-e7854131557d-4af74ce9" className="footer-links-column">
-                                    <div className="footer-menu_title">Legal</div>
-                                    <div className="footer-menu_link-wrap">
-                                        <a href="/terms" className="footer-menu_link w-inline-block">
-                                            <div>Terms &Conditions</div>
-                                        </a>
-                                        <a href="/cookies" className="footer-menu_link w-inline-block">
-                                            <div>Cookies</div>
-                                        </a>
-                                        <a href="licenses.html" className="footer-menu_link w-inline-block">
-                                            <div>Licenses</div>
-                                        </a>
-                                        <a href="404.html" className="footer-menu_link w-inline-block">
-                                            <div>404</div>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div id="w-node-_02084d99-4d3e-67aa-07d3-fc9302298ce0-4af74ce9" className="footer-links-column">
-                                    <div className="footer-menu_title">Follow us</div>
-                                    <div className="footer-menu_link-wrap is-social">
-                                        <a href="#" target="_blank" className="footer-menu_link w-inline-block">
-                                            <div className="footer-social_icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                    <path d="M9.33464 8.9987H11.0013L11.668 6.33203H9.33464V4.9987C9.33464 4.31244 9.33464 3.66536 10.668 3.66536H11.668V1.42543C11.4508 1.3966 10.63 1.33203 9.76324 1.33203C7.95357 1.33203 6.66797 2.4366 6.66797 4.46517V6.33203H4.66797V8.9987H6.66797V14.6654H9.33464V8.9987Z" fill="currentColor"></path>
-                                                </svg>
-                                            </div>
-                                            <div>Facebook </div>
-                                        </a>
-                                        <a href="#" target="_blank" className="footer-menu_link w-inline-block">
-                                            <div className="footer-social_icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                    <path d="M11.7929 2.04297L8.46177 5.8508L5.5816 2.04297H1.41016L6.39438 8.56044L1.67049 13.9596H3.69327L7.33917 9.7937L10.5255 13.9596H14.5936L9.39797 7.09077L13.8145 2.04297H11.7929ZM11.0834 12.7496L3.77088 3.18942H4.97294L12.2036 12.7496H11.0834Z" fill="currentColor"></path>
-                                                </svg>
-                                            </div>
-                                            <div>Tweeter</div>
-                                        </a>
-                                        <a href="#" target="_blank" className="footer-menu_link w-inline-block">
-                                            <div className="footer-social_icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                    <path d="M8.00067 6.36637C8.61207 5.74185 9.40807 5.33301 10.334 5.33301C12.359 5.33301 14.0007 6.97461 14.0007 8.99967V13.9997H12.6673V8.99967C12.6673 7.71101 11.6227 6.66634 10.334 6.66634C9.04533 6.66634 8.00067 7.71101 8.00067 8.99967V13.9997H6.66733V5.66634H8.00067V6.36637ZM3.33398 4.33301C2.7817 4.33301 2.33398 3.88529 2.33398 3.33301C2.33398 2.78072 2.7817 2.33301 3.33398 2.33301C3.88626 2.33301 4.33398 2.78072 4.33398 3.33301C4.33398 3.88529 3.88626 4.33301 3.33398 4.33301ZM2.66732 5.66634H4.00065V13.9997H2.66732V5.66634Z" fill="currentColor"></path>
-                                                </svg>
-                                            </div>
-                                            <div>LinkedIn</div>
-                                        </a>
-                                        <a href="#" target="_blank" className="footer-menu_link w-inline-block">
-                                            <div className="footer-social_icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" vector-effect="non-scaling-stroke" preserveAspectRatio="none">
-                                                    <path d="M8.00067 5.99967C6.89573 5.99967 6.00065 6.89507 6.00065 7.99967C6.00065 9.10454 6.89607 9.99967 8.00067 9.99967C9.10553 9.99967 10.0007 9.10427 10.0007 7.99967C10.0007 6.89481 9.10527 5.99967 8.00067 5.99967ZM8.00067 4.66634C9.84093 4.66634 11.334 6.15774 11.334 7.99967C11.334 9.84001 9.8426 11.333 8.00067 11.333C6.16034 11.333 4.66732 9.84161 4.66732 7.99967C4.66732 6.15936 6.15872 4.66634 8.00067 4.66634ZM12.334 4.49911C12.334 4.95918 11.9601 5.33245 11.5007 5.33245C11.0406 5.33245 10.6673 4.95861 10.6673 4.49911C10.6673 4.03961 11.0411 3.66634 11.5007 3.66634C11.9595 3.66576 12.334 4.03961 12.334 4.49911ZM8.00067 2.66634C6.351 2.66634 6.08212 2.67071 5.31484 2.70487C4.7921 2.72941 4.44168 2.79972 4.1161 2.92612C3.82677 3.03833 3.61806 3.17233 3.39568 3.39471C3.17244 3.61794 3.03869 3.82609 2.92693 4.11556C2.80024 4.44189 2.72995 4.79175 2.70585 5.31377C2.67135 6.04981 2.66732 6.30704 2.66732 7.99967C2.66732 9.64934 2.67168 9.91821 2.70584 10.6854C2.7304 11.2079 2.8008 11.5589 2.92689 11.8837C3.0394 12.1734 3.17366 12.3826 3.39497 12.6039C3.61908 12.8277 3.82786 12.9619 4.11458 13.0726C4.44412 13.2 4.79432 13.2704 5.31474 13.2945C6.05078 13.3289 6.30802 13.333 8.00067 13.333C9.65033 13.333 9.9192 13.3286 10.6864 13.2945C11.2078 13.27 11.559 13.1994 11.8847 13.0734C12.1736 12.9612 12.3835 12.8265 12.6049 12.6053C12.8291 12.3809 12.963 12.1726 13.0738 11.8852C13.2009 11.5569 13.2714 11.2062 13.2955 10.6856C13.3299 9.94954 13.334 9.69227 13.334 7.99967C13.334 6.35002 13.3296 6.08115 13.2955 5.31392C13.2709 4.79238 13.2003 4.44067 13.0742 4.11513C12.9623 3.82659 12.8278 3.61724 12.6056 3.39471C12.382 3.17111 12.1744 3.03763 11.8847 2.92595C11.5587 2.79937 11.2083 2.72898 10.6865 2.70488C9.95053 2.67037 9.69326 2.66634 8.00067 2.66634ZM8.00067 1.33301C9.81173 1.33301 10.0379 1.33967 10.749 1.37301C11.4584 1.40579 11.9423 1.51801 12.3673 1.68301C12.8067 1.85245 13.1779 2.08134 13.5484 2.45189C13.9184 2.82245 14.1473 3.19467 14.3173 3.63301C14.4817 4.05745 14.594 4.54189 14.6273 5.25134C14.659 5.96245 14.6673 6.18856 14.6673 7.99967C14.6673 9.81081 14.6607 10.0369 14.6273 10.748C14.5945 11.4575 14.4817 11.9413 14.3173 12.3663C14.1479 12.8058 13.9184 13.1769 13.5484 13.5475C13.1779 13.9175 12.8051 14.1463 12.3673 14.3163C11.9423 14.4808 11.4584 14.593 10.749 14.6263C10.0379 14.658 9.81173 14.6663 8.00067 14.6663C6.18954 14.6663 5.96342 14.6597 5.25232 14.6263C4.54287 14.5935 4.05954 14.4808 3.63398 14.3163C3.19509 14.1469 2.82342 13.9175 2.45287 13.5475C2.08232 13.1769 1.85398 12.8041 1.68398 12.3663C1.51898 11.9413 1.40732 11.4575 1.37398 10.748C1.34232 10.0369 1.33398 9.81081 1.33398 7.99967C1.33398 6.18856 1.34065 5.96245 1.37398 5.25134C1.40676 4.54134 1.51898 4.05801 1.68398 3.63301C1.85342 3.19412 2.08232 2.82245 2.45287 2.45189C2.82342 2.08134 3.19565 1.85301 3.63398 1.68301C4.05898 1.51801 4.54232 1.40634 5.25232 1.37301C5.96342 1.34134 6.18954 1.33301 8.00067 1.33301Z" fill="currentColor"></path>
-                                                </svg>
-                                            </div>
-                                            <div>Instagram</div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div data-w-id="c179c474-dbf0-a107-6eba-5d7b4af74d6f" className="footer_bottom">
-                            <div className="footer-bottom_element">
-                                <div className="text-color-dark">
-                                    © 2026 Tirumala Dental Clinic. Crafted by RapidXAI
-                                    .
-                                </div>
-                                <div className="footer-bottom_right">
-                                    <div className="text-color-dark">
-                                        © 2026 Tirumala Dental Clinic
-                                    </div>
-                                    <div className="footer-bottom_right-divider"></div>
-                                    <a href="/privacy" className="footer-menu_link w-inline-block">
-                                        <div>Privacy Policy</div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+          </motion.div>
         </div>
-      )}
+      </section>
     </>
   );
 }

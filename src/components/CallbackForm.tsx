@@ -45,7 +45,7 @@ export default function CallbackForm() {
             </svg>
           </div>
           <h3 className="text-xl font-bold text-brand-dark">
-            Thanks! You're all set.
+            Thanks! You&apos;re all set.
           </h3>
           <p className="text-sm text-brand-gray">
             Our clinic team will call you back within 10 minutes.

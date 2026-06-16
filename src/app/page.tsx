@@ -415,7 +415,7 @@ export default function HomePage() {
             >
               <div className="relative h-72 overflow-hidden">
                 <img
-                  src="/assets/img/gen_team-image-1.jpg"
+                  src="/assets/img/gen_team-image-2.jpg"
                   alt="Dr. Thumu Sai Kumar"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -462,7 +462,7 @@ export default function HomePage() {
             >
               <div className="relative h-72 overflow-hidden">
                 <img
-                  src="/assets/img/gen_team-image-2.jpg"
+                  src="/assets/img/gen_team-image-1.jpg"
                   alt="Dr. Thumu Bharathi"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

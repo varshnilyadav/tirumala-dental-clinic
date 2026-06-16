@@ -147,14 +147,14 @@ export default function AboutPage() {
               {
                 name: "Dr. Thumu Sai Kumar",
                 title: "MDS — Oral & Maxillofacial Surgeon",
-                img: "/assets/img/gen_team-image-1.jpg",
+                img: "/assets/img/gen_team-image-2.jpg",
                 tags: ["Implantologist", "Trauma Specialist", "Hair Transplant"],
                 bio: "With over 15 years of experience in oral and maxillofacial surgery, Dr. Sai Kumar is recognized for his expertise in complex dental implant surgeries, maxillofacial trauma care, and advanced FUE/FUT hair transplant procedures. He is passionate about restoring both function and aesthetics through minimally invasive techniques.",
               },
               {
                 name: "Dr. Thumu Bharathi",
                 title: "MDS — Conservative Dentistry & Endodontics",
-                img: "/assets/img/gen_team-image-2.jpg",
+                img: "/assets/img/gen_team-image-1.jpg",
                 tags: ["Endodontist", "Smile Designer", "Cosmetic Specialist"],
                 bio: "Dr. Bharathi specializes in pain-free root canal treatments, smile design makeovers, and conservative dental procedures that prioritize preserving natural teeth. Her gentle approach and attention to detail have earned the trust of thousands of patients across Adilabad.",
               },
